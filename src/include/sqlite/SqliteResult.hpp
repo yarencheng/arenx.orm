@@ -21,8 +21,6 @@ public:
 	virtual ~SqliteResult () = default;
 
 	virtual void AddRow(std::shared_ptr<ResultRowInterface> row);
-	virtual int GetAsInt();
-	virtual std::string GetAsString();
 
 private:
 	std::vector<std::string> _resultTitles;

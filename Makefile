@@ -8,23 +8,23 @@ BUILD_FOLDER := ./build/
 all:
 	mkdir -p $(BUILD_FOLDER)
 	@echo "\n========== pre_compile ==========\n"
-	@make pre_compile
+	$(MAKE) pre_compile
 	@echo "\n========== compile ==========\n"
-	@make compile
+	$(MAKE) compile
 	@echo "\n========== post_compile ==========\n"
-	@make post_compile
+	$(MAKE) post_compile
 	@echo "\n========== pre_compile_test ==========\n"
-	@make pre_compile_test
+	$(MAKE) pre_compile_test
 	@echo "\n========== compile_test ==========\n"
-	@make compile_test
+	$(MAKE) compile_test
 	@echo "\n========== post_compile_test ==========\n"
-	@make post_compile_test
+	$(MAKE) post_compile_test
 	@echo "\n========== pre_do_test ==========\n"
-	@make pre_do_test
+	$(MAKE) pre_do_test
 	@echo "\n========== do_test ==========\n"
-	@make do_test
+	$(MAKE) do_test
 	@echo "\n========== post_do_test ==========\n"
-	@make post_do_test
+	$(MAKE) post_do_test
 
 ##########################################################
 

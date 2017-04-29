@@ -14,8 +14,6 @@ public:
 	public:
 		virtual ~DummyResult () = default;
 		virtual void AddRow(std::shared_ptr<ResultRowInterface>){};
-		virtual int GetAsInt(){ return 123; };
-		virtual std::string GetAsString(){return "dummy";};
 	};
 
 	class DummyPreparedExecution: public PreparedExecutionInterface{

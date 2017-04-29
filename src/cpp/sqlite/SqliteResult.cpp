@@ -14,10 +14,3 @@ void SqliteResult::AddRow(std::shared_ptr<ResultRowInterface> row){
 	_rows.push_back(row);
 }
 
-int SqliteResult::GetAsInt(){
-	throw "TODO";
-}
-
-string SqliteResult::GetAsString(){
-	throw "TODO";
-}
