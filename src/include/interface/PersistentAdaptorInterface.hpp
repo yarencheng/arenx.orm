@@ -44,7 +44,6 @@ public:
 		return *this;
 	}
 
-	virtual void write(){ _mode = Mode::WRITE; }
 	template<class KEY>
 	void read(const KEY& key){
 		using namespace std;
@@ -58,6 +57,8 @@ public:
 			setKey(s);
 		}
 	}
+
+	virtual void write(){ _mode = Mode::WRITE; }
 	virtual void execute() = 0;
 
 protected:
