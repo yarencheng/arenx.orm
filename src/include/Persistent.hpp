@@ -11,16 +11,25 @@ class Persistent{
 public:
 
 	Persistent(PERSISTENCE& p){
-		pointer = &p;
+		_pointer = &p;
 	}
 
-	Persistent<PERSISTENCE>& named(std::string s){
-		name = s;
+	Persistent<PERSISTENCE>& named(const std::string& name){
+		_name = name;
 		return *this;
 	}
 
-	std::string name;
-	PERSISTENCE* pointer;
+	std::string getName(){
+		return _name;
+	}
+
+	PERSISTENCE* getPointer(){
+		return _pointer;
+	}
+
+private:
+	std::string _name;
+	PERSISTENCE* _pointer;
 };
 
 }
