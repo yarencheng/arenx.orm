@@ -33,6 +33,7 @@ public:
 	template<class ADAPTOR>
 	void adapt(ADAPTOR& adaptor) {
 		adaptor
+			| PersistenceCapable().named("tableeeee")
 			| Persistent<int>(_i).named("_i")
 			| Persistent<string>(_s).named("_s")
 			;

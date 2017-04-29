@@ -1,6 +1,7 @@
 
 #include <boost/lexical_cast.hpp>
-#include "Persistent.hpp"
+#include "../annotation/Persistent.hpp"
+#include "../annotation/PersistenceCapable.hpp"
 
 #pragma once
 
@@ -60,6 +61,10 @@ public:
 
 	virtual void write(){ _mode = Mode::WRITE; }
 	virtual void execute() = 0;
+
+	PersistentAdaptorInterface& operator|(PersistenceCapable& p) {
+		return *this;
+	}
 
 protected:
 //	virtual Mode getMode() = 0;
