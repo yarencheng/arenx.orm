@@ -11,10 +11,10 @@ using namespace ::std;
 using namespace ::arenx::orm;
 
 
-int SqliteRow::GetAsInt(){
+int SqliteRow::getAsInt(){
 	throw "TODO";
 }
 
-string SqliteRow::GetAsString(){
+string SqliteRow::getAsString(){
 	throw "TODO";
 }

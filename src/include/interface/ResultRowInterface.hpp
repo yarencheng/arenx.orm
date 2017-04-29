@@ -12,8 +12,8 @@ public:
 
 	virtual ~ResultRowInterface () = default;
 
-	virtual int GetAsInt() = 0;
-	virtual std::string GetAsString() = 0;
+	virtual int getAsInt() = 0;
+	virtual std::string getAsString() = 0;
 
 };
 

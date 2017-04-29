@@ -13,7 +13,7 @@ public:
 	class DummyResult: public ResultInterface{
 	public:
 		virtual ~DummyResult () = default;
-		virtual void AddRow(std::shared_ptr<ResultRowInterface>){};
+		virtual void forEach(const std::function<void(std::shared_ptr<ResultRowInterface>)>&) {};
 	};
 
 	class DummyPreparedExecution: public PreparedExecutionInterface{

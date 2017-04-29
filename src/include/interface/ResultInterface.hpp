@@ -3,6 +3,7 @@
 #pragma once
 
 #include <memory>
+#include <functional>
 #include "ResultRowInterface.hpp"
 
 namespace arenx { namespace orm {
@@ -13,8 +14,7 @@ public:
 
 	virtual ~ResultInterface () = default;
 
-	virtual void AddRow(std::shared_ptr<ResultRowInterface> row) = 0;
-
+	virtual void forEach(const std::function<void(std::shared_ptr<ResultRowInterface>)>& fn) = 0;
 };
 
 }}

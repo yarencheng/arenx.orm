@@ -18,8 +18,8 @@ class SqliteRow: public ResultRowInterface{
 public:
 
 	virtual ~SqliteRow () = default;
-	virtual int GetAsInt();
-	virtual std::string GetAsString();
+	virtual int getAsInt();
+	virtual std::string getAsString();
 
 private:
 	std::vector<std::shared_ptr<void> > _values;

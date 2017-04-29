@@ -93,7 +93,7 @@ shared_ptr<ResultInterface> SqlitePreparedStatement::Execute(){
 		}
 
 		row->_parent = result.get();
-		result->AddRow(row);
+		result->addRow(row);
 	}
 
 	int status = sqlite3_reset(_stmt.get());

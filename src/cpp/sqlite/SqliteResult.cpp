@@ -10,7 +10,13 @@
 using namespace ::std;
 using namespace ::arenx::orm;
 
-void SqliteResult::AddRow(std::shared_ptr<ResultRowInterface> row){
+void SqliteResult::addRow(shared_ptr<ResultRowInterface> row){
 	_rows.push_back(row);
 }
 
+void SqliteResult::forEach(const function<void(shared_ptr<ResultRowInterface>)>& fn)
+{
+	for (shared_ptr<ResultRowInterface> row: _rows) {
+		fn(row);
+	}
+}

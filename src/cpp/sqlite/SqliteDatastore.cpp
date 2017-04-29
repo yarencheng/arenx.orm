@@ -55,7 +55,7 @@ int SqliteDatastore::execCallback(void* context, int rowSize, char **rowValues, 
 	}
 
 	row->_parent = result.get();
-	result->AddRow(row);
+	result->addRow(row);
 
 	return 0;
 }
