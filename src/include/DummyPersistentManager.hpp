@@ -1,11 +1,11 @@
 
-#include <map>
+#pragma once
 
+#include <map>
 #include "DummyDatastore.hpp"
 #include "DummyPersistentAdaptor.hpp"
 #include "interface/PersistentManagerInterface.hpp"
 
-#pragma once
 
 namespace arenx { namespace orm {
 

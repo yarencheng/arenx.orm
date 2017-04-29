@@ -5,9 +5,9 @@
  *      Author: arenx
  */
 
-#include "../OrmException.hpp"
-
 #pragma once
+
+#include "../OrmException.hpp"
 
 #define SQLITE_EXCEPTION(...)	 SqliteException(__LINE__, __FILE__, ##__VA_ARGS__)
 

@@ -1,8 +1,9 @@
+
+#pragma once
+
 #include <memory>
 #include "PreparedExecutionInterface.hpp"
 #include "ResultInterface.hpp"
-
-#pragma once
 
 namespace arenx { namespace orm {
 

@@ -1,7 +1,8 @@
-#include <memory>
-#include "interface/DatastoreInterface.hpp"
 
 #pragma once
+
+#include <memory>
+#include "interface/DatastoreInterface.hpp"
 
 namespace arenx { namespace orm {
 
@@ -12,6 +13,9 @@ public:
 	class DummyResult: public ResultInterface{
 	public:
 		virtual ~DummyResult () = default;
+		virtual void AddRow(std::shared_ptr<ResultRowInterface>){};
+		virtual int GetAsInt(){ return 123; };
+		virtual std::string GetAsString(){return "dummy";};
 	};
 
 	class DummyPreparedExecution: public PreparedExecutionInterface{

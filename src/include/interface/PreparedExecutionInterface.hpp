@@ -1,8 +1,8 @@
 
+#pragma once
+
 #include <memory>
 #include "ResultInterface.hpp"
-
-#pragma once
 
 namespace arenx { namespace orm {
 

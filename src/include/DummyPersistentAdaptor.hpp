@@ -1,8 +1,8 @@
 
+#pragma once
+
 #include <iostream>
 #include "interface/PersistentAdaptorInterface.hpp"
-
-#pragma once
 
 namespace arenx { namespace orm {
 

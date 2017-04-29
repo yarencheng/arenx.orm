@@ -1,9 +1,10 @@
 
+#pragma once
+
 #include <boost/lexical_cast.hpp>
 #include "../annotation/Persistent.hpp"
 #include "../annotation/PersistenceCapable.hpp"
 
-#pragma once
 
 namespace arenx { namespace orm {
 

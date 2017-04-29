@@ -1,10 +1,10 @@
 
+#pragma once
+
 #include <typeindex>
 #include "PersistentAdaptorInterface.hpp"
 #include "PreparedExecutionInterface.hpp"
 #include "DatastoreInterface.hpp"
-
-#pragma once
 
 namespace arenx { namespace orm {
 
