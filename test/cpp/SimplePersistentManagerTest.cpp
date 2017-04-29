@@ -1,11 +1,5 @@
-/*
- * HelloWorldTest.cpp
- *
- *  Created on: 2017年4月23日
- *      Author: arenx
- */
 
-#include "HelloWorld.hpp"
+#include "SimplePersistentManager.hpp"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
@@ -17,9 +11,9 @@ using ::testing::Return;
 using ::testing::Invoke;
 using ::testing::_;
 
-namespace arenx { namespace orm { namespace HelloWorldTest {
+namespace arenx { namespace orm { namespace SimplePersistentManagerTest {
 
-class HelloWorldTest  : public Test {
+class SimplePersistentManagerTest  : public Test {
 protected:
 
 	virtual void SetUp() {
@@ -30,9 +24,10 @@ protected:
 };
 
 
-TEST_F(HelloWorldTest, hello){
+TEST_F(SimplePersistentManagerTest, hello){
 
-
+	SimplePersistentManager pm;
+	DummyDatastore ds;
 }
 
 
