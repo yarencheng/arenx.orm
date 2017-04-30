@@ -47,6 +47,30 @@ TEST_F(ValidatorTest, VALIDATE_NOT_NULL_fals){
 	}, IllegalArgumentException);
 }
 
+TEST_F(ValidatorTest, VALIDATE_TRUE_true){
+	EXPECT_NO_THROW({
+		VALIDATE_TRUE(true, "");
+	});
+}
+
+TEST_F(ValidatorTest, VALIDATE_TRUE_false){
+	EXPECT_THROW({
+		VALIDATE_TRUE(false, "");
+	}, IllegalArgumentException);
+}
+
+TEST_F(ValidatorTest, VALIDATE_FALSE_true){
+	EXPECT_NO_THROW({
+		VALIDATE_FALSE(false, "");
+	});
+}
+
+TEST_F(ValidatorTest, VALIDATE_FALSE_false){
+	EXPECT_THROW({
+		VALIDATE_FALSE(true, "");
+	}, IllegalArgumentException);
+}
+
 }}}
 
 

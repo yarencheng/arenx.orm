@@ -22,6 +22,7 @@ public:
 	virtual ~SqliteResult () = default;
 
 	virtual void forEach(const std::function<void(std::shared_ptr<ResultRowInterface>)>& fn);
+	std::size_t GetResultTitleIndex(const std::string& property);
 
 private:
 	std::vector<std::string> _resultTitles;

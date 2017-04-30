@@ -17,3 +17,19 @@ void Validator::notNull(shared_ptr<void> ptr, int line, const std::string& file,
 
 	throw IllegalArgumentException(line, file, message);
 }
+
+void Validator::isTrue(bool condition, int line, const std::string& file, const std::string& message){
+	if (condition) {
+		return;
+	}
+
+	throw IllegalArgumentException(line, file, message);
+}
+
+void Validator::isFalse(bool condition, int line, const std::string& file, const std::string& message){
+	if (!condition) {
+		return;
+	}
+
+	throw IllegalArgumentException(line, file, message);
+}
