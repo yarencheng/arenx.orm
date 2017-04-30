@@ -66,7 +66,7 @@ int32_t SqliteRow::getAsInt32(const std::string& property)
 	auto spt = _parent.lock();
 
 	if (!spt) {
-		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt(std::size_t) instead.");
+		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt32(std::size_t) instead.");
 	}
 
 	std::size_t index = spt->GetResultTitleIndex(property);
@@ -80,7 +80,7 @@ uint32_t SqliteRow::getAsUint32(const std::string& property)
 	auto spt = _parent.lock();
 
 	if (!spt) {
-		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt(std::size_t) instead.");
+		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsUint32(std::size_t) instead.");
 	}
 
 	std::size_t index = spt->GetResultTitleIndex(property);
@@ -182,7 +182,7 @@ int64_t SqliteRow::getAsInt64(const std::string& property)
 	auto spt = _parent.lock();
 
 	if (!spt) {
-		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt(std::size_t) instead.");
+		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt64(std::size_t) instead.");
 	}
 
 	std::size_t index = spt->GetResultTitleIndex(property);
@@ -239,7 +239,7 @@ double SqliteRow::getAsDouble(const std::string& property)
 	auto spt = _parent.lock();
 
 	if (!spt) {
-		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt(std::size_t) instead.");
+		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsDouble(std::size_t) instead.");
 	}
 
 	std::size_t index = spt->GetResultTitleIndex(property);
@@ -297,7 +297,7 @@ uint64_t SqliteRow::getAsUint64(const std::string& property)
 	auto spt = _parent.lock();
 
 	if (!spt) {
-		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt(std::size_t) instead.");
+		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsUint64(std::size_t) instead.");
 	}
 
 	std::size_t index = spt->GetResultTitleIndex(property);
@@ -358,12 +358,36 @@ string SqliteRow::getAsString(const std::string& property)
 	auto spt = _parent.lock();
 
 	if (!spt) {
-		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsInt(std::size_t) instead.");
+		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use getAsString(std::size_t) instead.");
 	}
 
 	std::size_t index = spt->GetResultTitleIndex(property);
 
 	return getAsString(index);
+}
+
+bool SqliteRow::isNull(const size_t& index){
+	int type;
+
+	try {
+		type = _valueTypes.at(index);
+	} catch (out_of_range& e) {
+		throw ILLEGAL_ARGUMENT_EXCEPTION("out of range [" + to_string(index) + "]", e);
+	}
+
+	return SQLITE_NULL == type;
+}
+
+bool SqliteRow::isNull(const string& property){
+	auto spt = _parent.lock();
+
+	if (!spt) {
+		throw SQLITE_EXCEPTION("SQLite result is deleted in memory. Use isNull(std::size_t) instead.");
+	}
+
+	std::size_t index = spt->GetResultTitleIndex(property);
+
+	return isNull(index);
 }
 
 vector<std::string> SqliteRow::getValues()

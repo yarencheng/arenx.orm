@@ -38,6 +38,29 @@ protected:
 	}
 };
 
+TEST_F(SqliteRowTest, isNull){
+
+	sqlite->Execute("CREATE TABLE test (v0 INTEGER, v1 INTEGER);");
+	sqlite->Execute("INSERT INTO test VALUES (111, NULL)");
+
+	shared_ptr<ResultInterface> result = sqlite->Execute("SELECT * FROM test;");
+
+	int count = 0;
+
+	result->forEach([&](shared_ptr<ResultRowInterface> row){
+		count++;
+
+		EXPECT_FALSE(row->isNull("v0"));
+		EXPECT_TRUE(row->isNull("v1"));
+		EXPECT_FALSE(row->isNull(0));
+		EXPECT_TRUE(row->isNull(1));
+
+		EXPECT_THROW({row->isNull("xxx");}, IllegalArgumentException);
+	});
+
+	EXPECT_EQ(count, 1);
+}
+
 TEST_F(SqliteRowTest, getAsInt32_by_name){
 
 	sqlite->Execute("CREATE TABLE test (v0 INTEGER);");

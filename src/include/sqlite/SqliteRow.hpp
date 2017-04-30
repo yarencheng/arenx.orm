@@ -33,6 +33,9 @@ public:
 	virtual std::string getAsString(const std::size_t& index);
 	virtual std::string getAsString(const std::string& property);
 
+	virtual bool isNull(const std::size_t& index);
+	virtual bool isNull(const std::string& property);
+
 	virtual std::vector<std::string> getValues();
 
 private:

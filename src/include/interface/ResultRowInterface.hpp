@@ -26,6 +26,9 @@ public:
 	virtual std::string getAsString(const std::size_t& index) = 0;
 	virtual std::string getAsString(const std::string& property) = 0;
 
+	virtual bool isNull(const std::size_t& index) = 0;
+	virtual bool isNull(const std::string& property) = 0;
+
 	virtual std::vector<std::string> getValues() = 0;
 };
 
