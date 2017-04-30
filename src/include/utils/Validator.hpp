@@ -8,7 +8,7 @@
 #pragma once
 
 #include <memory>
-#include "IllegalArgumentException.hpp"
+#include "../common/IllegalArgumentException.hpp"
 
 #define VALIDATE_NOT_NULL(ptr, message)		Validator::notNull(ptr, __LINE__, __FILE__, message)
 #define VALIDATE_TRUE(condition, message) 	Validator::isTrue((condition), __LINE__, __FILE__, message)

@@ -9,7 +9,7 @@
 
 #include <sqlite3.h>
 #include <boost/lexical_cast.hpp>
-#include "utils/IllegalArgumentException.hpp"
+#include "common/IllegalArgumentException.hpp"
 
 using namespace ::std;
 using namespace ::arenx::orm;

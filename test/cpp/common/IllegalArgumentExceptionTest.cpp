@@ -1,5 +1,5 @@
 
-#include "utils/IllegalArgumentException.hpp"
+#include "common/IllegalArgumentException.hpp"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
