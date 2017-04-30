@@ -28,51 +28,55 @@ all:
 
 ##########################################################
 
-SOURCES_HPP  := ./src/include
-SOURCES_CPP  := $(shell find src/cpp -name "*.cpp")
-OBJS         := $(basename $(SOURCES_CPP)) 
+SOURCES_INCLUDE  := ./src/include
+SOURCES_HPP      := $(shell find src/include -name "*.hpp")
+SOURCES_CPP      := $(shell find src/cpp -name "*.cpp")
+OBJS             := $(subst src, $(BUILD_FOLDER)/src, $(SOURCES_CPP:.cpp=.o))
 
 pre_compile:
 
 compile: $(OBJS)
 
-$(OBJS):
-	mkdir -p $(BUILD_FOLDER)/$(dir $@)
-	$(CXX) $(CXXFLAGS) -I$(SOURCES_HPP) -c $@.cpp -o $(BUILD_FOLDER)/$@.o 
-	
 post_compile:
+
+$(BUILD_FOLDER)/src/%.o: src/%.cpp $(SOURCES_HPP)
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -I$(SOURCES_INCLUDE) -c $< -o $@
+
 
 ##########################################################
 
 GTEST_DIR    := test/googletest/
 GMOCK_DIR    := test/googlemock/
 TEST_CPP     := $(shell find test/ -type f -name "*.cpp" ! -path "*$(GTEST_DIR)*" ! -path "*$(GMOCK_DIR)*")
-TEST_OBJS    := $(basename $(TEST_CPP)) 
+TEST_OBJS    := $(subst test, $(BUILD_FOLDER)/test, $(TEST_CPP:.cpp=.o))
 
 pre_compile_test: 
 	mkdir -p $(BUILD_FOLDER)/test/
 
-compile_test: google_test google_mock $(TEST_OBJS)
-	$(CXX) $(CXXFLAGS) -I$(SOURCES_HPP) -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -c $(GMOCK_DIR)/src/gmock_main.cc -o $(BUILD_FOLDER)/test/gmock_main.o
-	$(CXX) $(CXXFLAGS) -o $(BUILD_FOLDER)/test/test -pthread \
-		$(foreach obj, $(OBJS), $(BUILD_FOLDER)/$(obj).o)  \
-		$(foreach obj, $(TEST_OBJS), $(BUILD_FOLDER)/$(obj).o) \
+compile_test: $(BUILD_FOLDER)/test/unit_test
+
+post_compile_test:
+
+$(BUILD_FOLDER)/test/unit_test: $(TEST_OBJS) $(BUILD_FOLDER)/test/gtest-all.o $(BUILD_FOLDER)/test/gmock-all.o
+	$(CXX) $(CXXFLAGS) -I$(SOURCES_INCLUDE) -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -c $(GMOCK_DIR)/src/gmock_main.cc -o $(BUILD_FOLDER)/test/gmock_main.o
+	$(CXX) $(CXXFLAGS) -o $@ -pthread \
+		$(OBJS) $(TEST_OBJS) \
 		$(BUILD_FOLDER)/test/gmock_main.o \
 		$(BUILD_FOLDER)/test/gtest-all.o \
 		$(BUILD_FOLDER)/test/gmock-all.o \
-		$(LIBS)		
-	
-$(TEST_OBJS):
-	mkdir -p $(BUILD_FOLDER)/$(dir $@)
-	$(CXX) $(CXXFLAGS) -I$(SOURCES_HPP) -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -c $@.cpp -o $(BUILD_FOLDER)/$@.o 
+		$(LIBS)
 
-post_compile_test:	
+$(BUILD_FOLDER)/test/%.o: test/%.cpp $(SOURCES_HPP)
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -I$(SOURCES_INCLUDE) -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -c $< -o $@
 
-google_test:
+
+$(BUILD_FOLDER)/test/gtest-all.o: $(shell find $(GTEST_DIR) -name "*")
 	$(CXX) $(CXXFLAGS) -isystem ${GTEST_DIR}/include -I${GTEST_DIR} -pthread -c ${GTEST_DIR}/src/gtest-all.cc \
 		-o $(BUILD_FOLDER)/test/gtest-all.o
 
-google_mock:
+$(BUILD_FOLDER)/test/gmock-all.o: $(shell find $(GTEST_DIR) -name "*") $(shell find $(GMOCK_DIR) -name "*")
 	$(CXX) $(CXXFLAGS) -isystem ${GTEST_DIR}/include -I${GTEST_DIR} -isystem ${GMOCK_DIR}/include -I${GMOCK_DIR} -pthread -c ${GMOCK_DIR}/src/gmock-all.cc \
 		-o $(BUILD_FOLDER)/test/gmock-all.o
 	
@@ -83,7 +87,7 @@ pre_do_test:
 
 do_test:
 	@cd $(BUILD_FOLDER)/test/ && \
-		./test --gtest_color=yes --gtest_output=xml
+		./unit_test --gtest_color=yes --gtest_output=xml
 
 post_do_test:
 
