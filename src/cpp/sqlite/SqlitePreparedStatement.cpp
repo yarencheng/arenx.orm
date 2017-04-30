@@ -8,6 +8,7 @@
 #include "sqlite/SqlitePreparedStatement.hpp"
 
 #include <cstring>
+#include <sstream>
 #include <boost/format.hpp>
 
 using namespace ::std;
@@ -102,4 +103,79 @@ shared_ptr<ResultInterface> SqlitePreparedStatement::Execute(){
 	}
 
 	return result;
+}
+
+
+void SqlitePreparedStatement::Bind(int index, const int32_t value)
+{
+	Bind(index, (int64_t)value);
+}
+
+void SqlitePreparedStatement::Bind(int index, const u_int32_t value)
+{
+	Bind(index, (int64_t)value);
+}
+
+void SqlitePreparedStatement::Bind(int index, const int64_t value)
+{
+	int status = sqlite3_bind_int64(_stmt.get(), index, value);
+
+	switch (status) {
+	case SQLITE_OK:
+		return;
+	case SQLITE_RANGE:
+		throw SQLITE_EXCEPTION("Invalid index causes binding failure.");
+	case SQLITE_TOOBIG:
+		throw SQLITE_EXCEPTION("value is too large to bind.");
+	case SQLITE_NOMEM:
+		throw SQLITE_EXCEPTION("out of memory");
+	default:
+		stringstream ss;
+		ss << "failed to bind value [" << value << "] to sqlite prepared statement with status [" << status << "]";
+		throw SQLITE_EXCEPTION(ss.str());
+	}
+}
+
+void SqlitePreparedStatement::Bind(int index, const u_int64_t value){
+	throw SQLITE_EXCEPTION("SQlite dose not support unsigned 64-bit integer");
+}
+
+void SqlitePreparedStatement::Bind(int index, const double value)
+{
+	int status = sqlite3_bind_double(_stmt.get(), index, value);
+
+	switch (status) {
+	case SQLITE_OK:
+		return;
+	case SQLITE_RANGE:
+		throw SQLITE_EXCEPTION("Invalid index causes binding failure.");
+	case SQLITE_TOOBIG:
+		throw SQLITE_EXCEPTION("value is too large to bind.");
+	case SQLITE_NOMEM:
+		throw SQLITE_EXCEPTION("out of memory");
+	default:
+		stringstream ss;
+		ss << "failed to bind value [" << value << "] to sqlite prepared statement with status [" << status << "]";
+		throw SQLITE_EXCEPTION(ss.str());
+	}
+}
+
+void SqlitePreparedStatement::Bind(int index, const string& value)
+{
+	int status = sqlite3_bind_text(_stmt.get(), index, value.c_str(), value.length(), SQLITE_TRANSIENT);
+
+	switch (status) {
+	case SQLITE_OK:
+		return;
+	case SQLITE_RANGE:
+		throw SQLITE_EXCEPTION("Invalid index causes binding failure.");
+	case SQLITE_TOOBIG:
+		throw SQLITE_EXCEPTION("value is too large to bind.");
+	case SQLITE_NOMEM:
+		throw SQLITE_EXCEPTION("out of memory");
+	default:
+		stringstream ss;
+		ss << "failed to bind value [" << value << "] to sqlite prepared statement with status [" << status << "]";
+		throw SQLITE_EXCEPTION(ss.str());
+	}
 }

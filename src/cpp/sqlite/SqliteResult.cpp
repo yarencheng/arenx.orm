@@ -24,7 +24,7 @@ void SqliteResult::forEach(const function<void(shared_ptr<ResultRowInterface>)>&
 	}
 }
 
-std::size_t SqliteResult::GetResultTitleIndex(const string& property)
+size_t SqliteResult::GetResultTitleIndex(const string& property)
 {
 	auto it = _resultIndexs.find(property);
 
