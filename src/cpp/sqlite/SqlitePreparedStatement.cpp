@@ -92,7 +92,7 @@ shared_ptr<ResultInterface> SqlitePreparedStatement::Execute(){
 			}
 		}
 
-		row->_parent = result.get();
+		row->_parent = result;
 		result->addRow(row);
 	}
 

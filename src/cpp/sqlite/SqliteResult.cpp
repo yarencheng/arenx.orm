@@ -7,6 +7,7 @@
 
 #include "sqlite/SqliteResult.hpp"
 
+#include <iomanip>
 #include "utils/Validator.hpp"
 
 using namespace ::std;
@@ -30,4 +31,56 @@ std::size_t SqliteResult::GetResultTitleIndex(const string& property)
 	VALIDATE_TRUE(_resultIndexs.end() != it, "no such property [" + property + "]");
 
 	return it->second;
+}
+
+ostream& SqliteResult::dump(ostream& os){
+	if (_resultTitles.empty()) {
+		return os;
+	}
+
+	vector<size_t> columnSize;
+	for (string& s: _resultTitles) {
+		columnSize.push_back(s.length());
+	}
+
+	for (shared_ptr<ResultRowInterface> row: _rows) {
+
+		vector<string> values = row->GetValues();
+		for (size_t i = 0; i < values.size(); i++) {
+			if (columnSize[i] < values[i].length()) {
+				columnSize[i] = values[i].length();
+			}
+		}
+	}
+
+	for (size_t i = 0; i < _resultTitles.size(); i++) {
+		if (0 != i) {
+			os << "|";
+		}
+		os << setw(columnSize[i]) << left << _resultTitles[i];
+	}
+	os << endl;
+
+	for (size_t i = 0; i < _resultTitles.size(); i++) {
+		if (0 != i) {
+			os << "+";
+		}
+		os << setw(columnSize[i]) << left << string(columnSize[i], '-');
+	}
+	os << endl;
+
+	for (shared_ptr<ResultRowInterface> row: _rows) {
+
+		vector<string> values = row->GetValues();
+
+		for (size_t i = 0; i < values.size(); i++) {
+			if (0 != i) {
+				os << "|";
+			}
+			os << setw(columnSize[i]) << left << values[i];
+		}
+		os << endl;
+	}
+
+	return os;
 }

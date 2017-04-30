@@ -14,6 +14,7 @@ public:
 	public:
 		virtual ~DummyResult () = default;
 		virtual void forEach(const std::function<void(std::shared_ptr<ResultRowInterface>)>&) {};
+		virtual std::ostream& dump(std::ostream& os) { return os; };
 	};
 
 	class DummyPreparedExecution: public PreparedExecutionInterface{

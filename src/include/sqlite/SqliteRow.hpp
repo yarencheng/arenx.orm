@@ -5,6 +5,7 @@
 #include "../interface/ResultRowInterface.hpp"
 #include "SqliteResult.hpp"
 #include "SqlitePreparedStatement.hpp"
+#include "SqliteException.hpp"
 #include "../foward_declare.hpp"
 
 namespace arenx { namespace orm {
@@ -19,8 +20,8 @@ public:
 
 	virtual ~SqliteRow () = default;
 
-	virtual int getAsInt(const std::size_t& index);
-	virtual int getAsInt(const std::string& property);
+	virtual int32_t getAsInt32(const std::size_t& index);
+	virtual int32_t getAsInt32(const std::string& property);
 	virtual uint32_t getAsUint32(const std::size_t& index);
 	virtual uint32_t getAsUint32(const std::string& property);
 	virtual int64_t getAsInt64(const std::size_t& index);
@@ -32,12 +33,13 @@ public:
 	virtual std::string getAsString(const std::size_t& index);
 	virtual std::string getAsString(const std::string& property);
 
+	virtual std::vector<std::string> GetValues();
 
 private:
 	std::vector<std::shared_ptr<void> > _values;
 	std::vector<std::size_t> _valueSizes;
 	std::vector<int> _valueTypes;
-	SqliteResult* _parent;
+	std::weak_ptr<SqliteResult> _parent;
 };
 
 }}

@@ -18,65 +18,8 @@ SqliteDatastore::~SqliteDatastore (){
 
 }
 
-int SqliteDatastore::execCallback(void* context, int rowSize, char **rowValues, char **columnName)
-{
-	shared_ptr<SqliteResult> result = *(shared_ptr<SqliteResult>*)context;
-
-	if (result->_resultTitles.empty()) {
-		for(int i=0; i<rowSize; i++){
-			result->_resultTitles.push_back(columnName[i]);
-		}
-
-		std::size_t index = 0;
-		for (string& s: result->_resultTitles) {
-			result->_resultIndexs[s] = index++;
-		}
-	}
-
-	shared_ptr<SqliteRow> row = make_shared<SqliteRow>();
-
-	for(int i=0; i<rowSize; i++){
-		if (NULL == rowValues[i]) {
-			row->_valueTypes.push_back(SQLITE_NULL);
-			row->_valueSizes.push_back(0);
-			row->_values.push_back(shared_ptr<uint8_t>(NULL));
-		} else {
-			row->_valueTypes.push_back(SQLITE_TEXT);
-
-			const char* c = rowValues[i];
-			std::size_t cSize = strlen(c);
-
-			shared_ptr<char> buf( new char[cSize], default_delete<char[]>() );
-			strncpy(buf.get(), c, cSize);
-
-			row->_valueSizes.push_back(cSize);
-			row->_values.push_back(buf);
-		}
-	}
-
-	row->_parent = result.get();
-	result->addRow(row);
-
-	return 0;
-}
-
 shared_ptr<ResultInterface> SqliteDatastore::Execute(const string& command){
-	if (!_conn) {
-		throw SQLITE_EXCEPTION("database is not connected");
-	}
-
-	char* error = nullptr;
-	shared_ptr<SqliteResult> result = make_shared<SqliteResult>();
-
-	int status= sqlite3_exec(_conn.get(), command.c_str(), &SqliteDatastore::execCallback, &result, &error);
-
-	if (SQLITE_OK != status) {
-		string s = boost::str(boost::format("Failed to execute SQL=[%1%] error=[%2%]") % command % error);
-		sqlite3_free(error);
-		throw SQLITE_EXCEPTION(s);
-	}
-
-	return result;
+	return Prepare(command)->Execute();
 }
 
 shared_ptr<PreparedExecutionInterface> SqliteDatastore::Prepare(const string& command){

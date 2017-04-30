@@ -19,8 +19,6 @@ public:
 	virtual std::shared_ptr<PreparedExecutionInterface> Prepare(const std::string& command);
 
 private:
-	static int execCallback(void* context, int rowSize, char **rowValues, char **columnName);
-
 	std::shared_ptr<sqlite3> _conn;
 
 	void connect(const std::string& uri);

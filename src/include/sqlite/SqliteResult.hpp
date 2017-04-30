@@ -24,12 +24,16 @@ public:
 	virtual void forEach(const std::function<void(std::shared_ptr<ResultRowInterface>)>& fn);
 	std::size_t GetResultTitleIndex(const std::string& property);
 
+protected:
+	virtual std::ostream& dump(std::ostream& os);
+
 private:
 	std::vector<std::string> _resultTitles;
 	std::map<std::string, std::size_t> _resultIndexs;
 	std::list<std::shared_ptr<ResultRowInterface> > _rows;
 
 	virtual void addRow(std::shared_ptr<ResultRowInterface> row);
+
 };
 
 }}

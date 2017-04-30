@@ -67,7 +67,7 @@ $(BUILD_FOLDER)/test/unit_test: $(TEST_OBJS) $(BUILD_FOLDER)/test/gtest-all.o $(
 		$(BUILD_FOLDER)/test/gmock-all.o \
 		$(LIBS)
 
-$(BUILD_FOLDER)/test/%.o: test/%.cpp $(SOURCES_HPP)
+$(BUILD_FOLDER)/test/%.o: test/%.cpp $(SOURCES_HPP) $(OBJS)
 	mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -I$(SOURCES_INCLUDE) -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -c $< -o $@
 
@@ -87,7 +87,7 @@ pre_do_test:
 
 do_test:
 	@cd $(BUILD_FOLDER)/test/ && \
-		./unit_test --gtest_color=yes --gtest_output=xml
+		./unit_test --gtest_color=yes --gtest_output=xml | tee unit_test.stdout
 
 post_do_test:
 
