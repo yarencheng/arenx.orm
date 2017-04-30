@@ -45,7 +45,7 @@ ostream& SqliteResult::dump(ostream& os){
 
 	for (shared_ptr<ResultRowInterface> row: _rows) {
 
-		vector<string> values = row->GetValues();
+		vector<string> values = row->getValues();
 		for (size_t i = 0; i < values.size(); i++) {
 			if (columnSize[i] < values[i].length()) {
 				columnSize[i] = values[i].length();
@@ -71,7 +71,7 @@ ostream& SqliteResult::dump(ostream& os){
 
 	for (shared_ptr<ResultRowInterface> row: _rows) {
 
-		vector<string> values = row->GetValues();
+		vector<string> values = row->getValues();
 
 		for (size_t i = 0; i < values.size(); i++) {
 			if (0 != i) {

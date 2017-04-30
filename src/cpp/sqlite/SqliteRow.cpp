@@ -366,7 +366,7 @@ string SqliteRow::getAsString(const std::string& property)
 	return getAsString(index);
 }
 
-vector<std::string> SqliteRow::GetValues()
+vector<std::string> SqliteRow::getValues()
 {
 	vector<string> out;
 

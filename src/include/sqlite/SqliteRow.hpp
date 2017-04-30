@@ -33,7 +33,7 @@ public:
 	virtual std::string getAsString(const std::size_t& index);
 	virtual std::string getAsString(const std::string& property);
 
-	virtual std::vector<std::string> GetValues();
+	virtual std::vector<std::string> getValues();
 
 private:
 	std::vector<std::shared_ptr<void> > _values;
