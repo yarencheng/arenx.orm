@@ -68,7 +68,7 @@ public:
 	}
 
 protected:
-//	virtual Mode getMode() = 0;
+
 	virtual void save(const std::string& name, int i) = 0;
 	virtual void save(const std::string& name, const std::string& s) = 0;
 
